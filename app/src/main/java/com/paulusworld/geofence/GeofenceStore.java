@@ -57,34 +57,22 @@ public class GeofenceStore extends Context implements ConnectionCallbacks,
 
     private final String TAG = this.getClass().getSimpleName();
 
-    /**
-     * Context
-     */
+//  Context
     private Context mContext;
 
-    /**
-     * Google API client object.
-     */
+//   Google API client object.
     private GoogleApiClient mGoogleApiClient;
 
-    /**
-     * Geofencing PendingIntent
-     */
+//  Geofencing PendingIntent
     private PendingIntent mPendingIntent;
 
-    /**
-     * List of geofences to monitor.
-     */
+//   List of geofences to monitor.
     private ArrayList<Geofence> mGeofences;
 
-    /**
-     * Geofence request.
-     */
+//   Geofence request.
     private GeofencingRequest mGeofencingRequest;
 
-    /**
-     * Location Request object.
-     */
+//  Location Request object
     private LocationRequest mLocationRequest;
 
     /**
@@ -188,7 +176,8 @@ public class GeofenceStore extends Context implements ConnectionCallbacks,
      * take place. In this instance, we are using an IntentService to handle the
      * transitions.
      *
-     * @return A PendingIntent that will handle geofence transitions.
+     * @return A PendingIntent that will handle geofence transitions .
+     * ==== PASS VALUE TO GeofenceIntentService.Java class =====
      */
     private PendingIntent createRequestPendingIntent() {
         if (mPendingIntent == null) {
@@ -214,6 +203,10 @@ public class GeofenceStore extends Context implements ConnectionCallbacks,
                 + "Speed:\t\t" + location.getSpeed() + "\n"
                 + "Accuracy:\t" + location.getAccuracy() + "\n");
     }
+
+//    ==================================== END OF GeofenceStore FUNCTION ===================================
+
+//    ====================================     START OF IMPORT METHOD    ===================================
 
     @Override
     public AssetManager getAssets() {

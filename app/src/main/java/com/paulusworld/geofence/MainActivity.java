@@ -22,33 +22,20 @@ import java.util.ArrayList;
 
 public class MainActivity extends FragmentActivity implements OnCameraChangeListener {
 
-    /**
-     * Google Map object
-     */
+
+//     * Google Map object
     private GoogleMap mMap;
 
-    /**
-     * Geofence Data
-     */
-
-    /**
-     * Geofences Array
-     */
+//     * Geofences Array
     ArrayList<Geofence> mGeofences;
 
-    /**
-     * Geofence Coordinates
-     */
+//     * Geofence Coordinates
     ArrayList<LatLng> mGeofenceCoordinates;
 
-    /**
-     * Geofence Radius'
-     */
+//     * Geofence Radius'
     ArrayList<Integer> mGeofenceRadius;
 
-    /**
-     * Geofence Store
-     */
+//     * Geofence Store
     private GeofenceStore mGeofenceStore;
 
 
@@ -63,35 +50,34 @@ public class MainActivity extends FragmentActivity implements OnCameraChangeList
         mGeofenceRadius = new ArrayList<Integer>();
 
         // Adding geofence coordinates to array.
-        mGeofenceCoordinates.add(new LatLng(2.9230733, 101.6613033));
-//        mGeofenceCoordinates.add(new LatLng(2.927269, 101.656859));
-//        mGeofenceCoordinates.add(new LatLng(2.927440, 101.644328));
-//        mGeofenceCoordinates.add(new LatLng(2.918097,101.650722));
+        mGeofenceCoordinates.add(new LatLng(2.9230733, 101.6613033)); //FingerTec R&D Centre
+//        mGeofenceCoordinates.add(new LatLng(2.927269, 101.656859)); //TimeTec HQ Puchong
+
+//        Marker marker = mMap.addMarker(new MarkerOptions()
+//                .position(new LatLng(2.9230733, 101.6613033))
+//                .title("San Francisco")
+//                .snippet("Population: 776733"));
 
         // Adding associated geofence radius' to array.
-        mGeofenceRadius.add(70);
+        mGeofenceRadius.add(60);
 //        mGeofenceRadius.add(50);
-//        mGeofenceRadius.add(160);
 //        mGeofenceRadius.add(160);
 
         // Bulding the geofences and adding them to the geofence array.
 
-        // Performing Arts Center
+        // FingerTec R&D Centre
         mGeofences.add(new Geofence.Builder()
                 .setRequestId("FingerTec R&D Centre")
                         // The coordinates of the center of the geofence and the radius in meters.
                 .setCircularRegion(mGeofenceCoordinates.get(0).latitude, mGeofenceCoordinates.get(0).longitude, mGeofenceRadius.get(0).intValue())
                 .setExpirationDuration(Geofence.NEVER_EXPIRE)
-                        // Required when we use the transition type of GEOFENCE_TRANSITION_DWELL
-                .setLoiteringDelay(30000)
-                .setTransitionTypes(
-                        Geofence.GEOFENCE_TRANSITION_ENTER
-                                | Geofence.GEOFENCE_TRANSITION_DWELL
-                                | Geofence.GEOFENCE_TRANSITION_EXIT).build());
+                // Required when we use the transition type of GEOFENCE_TRANSITION_DWELL
+                .setLoiteringDelay(30000) // (60000 = 1 minute Delay)
+                .setTransitionTypes(Geofence.GEOFENCE_TRANSITION_ENTER | Geofence.GEOFENCE_TRANSITION_DWELL | Geofence.GEOFENCE_TRANSITION_EXIT).build());
 
-//        // Starbucks
+//        // TimeTec HQ Puchong
 //        mGeofences.add(new Geofence.Builder()
-//                .setRequestId("Starbucks")
+//                .setRequestId("TimeTec HQ Puchong")
 //                        // The coordinates of the center of the geofence and the radius in meters.
 //                .setCircularRegion(mGeofenceCoordinates.get(1).latitude, mGeofenceCoordinates.get(1).longitude, mGeofenceRadius.get(1).intValue())
 //                .setExpirationDuration(Geofence.NEVER_EXPIRE)
@@ -101,28 +87,9 @@ public class MainActivity extends FragmentActivity implements OnCameraChangeList
 //                        Geofence.GEOFENCE_TRANSITION_ENTER
 //                                | Geofence.GEOFENCE_TRANSITION_DWELL
 //                                | Geofence.GEOFENCE_TRANSITION_EXIT).build());
-//
-//        // Milwaukee Public Museum
-//        mGeofences.add(new Geofence.Builder()
-//                .setRequestId("Milwaukee Public Museum")
-//                        // The coordinates of the center of the geofence and the radius in meters.
-//                .setCircularRegion(mGeofenceCoordinates.get(2).latitude, mGeofenceCoordinates.get(2).longitude, mGeofenceRadius.get(2).intValue())
-//                .setExpirationDuration(Geofence.NEVER_EXPIRE)
-//                .setTransitionTypes(
-//                        Geofence.GEOFENCE_TRANSITION_ENTER
-//                                | Geofence.GEOFENCE_TRANSITION_EXIT).build());
-//
-//        // Milwaukee Art Museum
-//        mGeofences.add(new Geofence.Builder()
-//                .setRequestId("Milwaukee Art Museum")
-//                        // The coordinates of the center of the geofence and the radius in meters.
-//                .setCircularRegion(mGeofenceCoordinates.get(3).latitude, mGeofenceCoordinates.get(3).longitude, mGeofenceRadius.get(3).intValue())
-//                .setExpirationDuration(Geofence.NEVER_EXPIRE)
-//                .setTransitionTypes(
-//                        Geofence.GEOFENCE_TRANSITION_ENTER
-//                                | Geofence.GEOFENCE_TRANSITION_EXIT).build());
 
-        // Add the geofences to the GeofenceStore object.
+
+        // Add the geofences to the GeofenceStore.Java object.
         mGeofenceStore = new GeofenceStore(this, mGeofences);
 
     }
@@ -175,12 +142,13 @@ public class MainActivity extends FragmentActivity implements OnCameraChangeList
     private void setUpMap() {
         // Centers the camera over the building and zooms int far enough to
         // show the floor picker.
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(
-                2.9230733, 101.6613033), 14));
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(2.9230733, 101.6613033), 17));
 
         // Hide labels.
         mMap.setMapType(GoogleMap.MAP_TYPE_HYBRID);
         mMap.setIndoorEnabled(false);
+
+        //Add Permission :
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             // TODO: Consider calling
             //    ActivityCompat#requestPermissions
@@ -191,6 +159,7 @@ public class MainActivity extends FragmentActivity implements OnCameraChangeList
             // for ActivityCompat#requestPermissions for more details.
             return;
         }
+
         mMap.setMyLocationEnabled(true);
 
         mMap.setOnCameraChangeListener(this);
@@ -203,8 +172,9 @@ public class MainActivity extends FragmentActivity implements OnCameraChangeList
         for(int i = 0; i < mGeofenceCoordinates.size(); i++) {
             mMap.addCircle(new CircleOptions().center(mGeofenceCoordinates.get(i))
                     .radius(mGeofenceRadius.get(i).intValue())
-                    .fillColor(0x40ff0000)
-                    .strokeColor(Color.TRANSPARENT).strokeWidth(1));
+//                    .fillColor(0x40ff0000)
+                    .strokeColor(Color.RED).strokeWidth(5));
+
         }
     }
 }

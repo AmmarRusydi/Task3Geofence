@@ -44,7 +44,7 @@ public class GeofenceIntentService extends IntentService {
 
             switch(transition) {
                 case Geofence.GEOFENCE_TRANSITION_ENTER:
-                    notificationTitle = "You Have Clock In at";
+                    notificationTitle = "You Have Entered";
                     Log.v(TAG, "Geofence Entered");
                     break;
                 case Geofence.GEOFENCE_TRANSITION_DWELL:
@@ -63,23 +63,18 @@ public class GeofenceIntentService extends IntentService {
         }
     }
 
-    private void sendNotification(Context context, String notificationText,
-                                  String notificationTitle) {
+    private void sendNotification(Context context, String notificationText, String notificationTitle) {
 
-        PowerManager pm = (PowerManager) context
-                .getSystemService(Context.POWER_SERVICE);
-        PowerManager.WakeLock wakeLock = pm.newWakeLock(
-                PowerManager.PARTIAL_WAKE_LOCK, "");
+        PowerManager pm = (PowerManager) context.getSystemService(Context.POWER_SERVICE);
+        PowerManager.WakeLock wakeLock = pm.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "");
         wakeLock.acquire();
 
-        NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(
-                context).setSmallIcon(R.mipmap.ic_launcher)
+        NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(context).setSmallIcon(R.mipmap.ic_launcher)
                 .setContentTitle(notificationTitle)
                 .setContentText(notificationText)
                 .setDefaults(Notification.DEFAULT_ALL).setAutoCancel(false);
 
-        NotificationManager notificationManager = (NotificationManager) context
-                .getSystemService(Context.NOTIFICATION_SERVICE);
+        NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
         notificationManager.notify(0, notificationBuilder.build());
 
         wakeLock.release();
